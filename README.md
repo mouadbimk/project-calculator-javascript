@@ -10,4 +10,4 @@ project calculator with javascript to parctice multi conceptes of javascript lik
 
 ## IMAGE OF PROJECT
 
-[Project Image](./src/assets/image.png)
+![Project Image](./src/assets/image.png)
