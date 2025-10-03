@@ -17,7 +17,7 @@ A simple **Calculator Project** built with **JavaScript** to practice and apply 
 clone the repository and install dependencies :
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/mouadbimk/project-calculator-javascript
 cd project-calculator-javascript
 npm install
 npm run start
