@@ -1,0 +1,19 @@
+{
+  "name": "calculatrice-javascript",
+  "version": "1.0.0",
+  "description": "first project with MVC pattren",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "mouadbimk",
+  "type": "module",
+  "default": "index.html",
+  "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.45.1",
+    "parcel": "^2.16.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

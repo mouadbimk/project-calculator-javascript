@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/style.css" />
+    <script type="module" src="./src/js/controller.js"></script>
+    <title>JAVASCRIPT - CALCULATOR</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="logo">CALCULATOR</div>
+        <nav class="nav-menu">
+          <button class="btn btn-menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.266 16.06a8.923 8.923 0 0 0 3.915 3.978a8.706 8.706 0 0 0 5.471.832a8.795 8.795 0 0 0 4.887-2.64a9.067 9.067 0 0 0 2.388-5.079a9.135 9.135 0 0 0-1.044-5.53a8.903 8.903 0 0 0-4.069-3.815a8.7 8.7 0 0 0-5.5-.608c-1.85.401-3.366 1.313-4.62 2.755c-.151.16-.735.806-1.22 1.781M7.5 8l-3.609.72L3 5m9 4v4l3 2"
+              />
+            </svg>
+          </button>
+          <button class="btn btn-menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+              />
+            </svg>
+
+            <!-- svg sun
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><title>Sun SVG Icon</title><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path d="M12 3V2m0 20v-1m9-9h1M2 12h1m15.5-6.5L20 4M4 20l1.5-1.5M4 4l1.5 1.5m13 13L20 20"/><circle cx="12" cy="12" r="4"/></g></svg>
+            -->
+          </button>
+        </nav>
+      </header>
+      <div class="boxes boxes-main">
+        <div class="box calculator">
+          <span class="result input">Enter Operation</span>
+          <div class="btns-control">
+            <button class="btn btn-calc" data-value="ac">AC</button>
+            <button class="btn btn-calc" data-value="del">DEL</button>
+            <button class="btn btn-calc" data-value="leftBracket">
+              &LeftAngleBracket;
+            </button>
+            <button class="btn btn-calc" data-value="rightBracket">
+              &RightAngleBracket;
+            </button>
+            <button class="btn btn-calc" data-value="left">&leftarrow;</button>
+            <button class="btn btn-calc" data-value="right">
+              &rightarrow;
+            </button>
+            <button class="btn btn-calc" data-value="pi">&pi;</button>
+            <button class="btn btn-calc" data-value="recine">&radic;</button>
+          </div>
+          <div class="boxes btns-boxes">
+            <div class="boxes btns-number">
+              <button class="btn btn-calc" data-value="1">1</button>
+              <button class="btn btn-calc" data-value="2">2</button>
+              <button class="btn btn-calc" data-value="3">3</button>
+              <button class="btn btn-calc" data-value="4">4</button>
+              <button class="btn btn-calc" data-value="5">5</button>
+              <button class="btn btn-calc" data-value="6">6</button>
+              <button class="btn btn-calc" data-value="7">7</button>
+              <button class="btn btn-calc" data-value="8">8</button>
+              <button class="btn btn-calc" data-value="8">9</button>
+              <button class="btn btn-calc" data-value="0">0</button>
+              <button class="btn btn-calc" data-value=".">.</button>
+            </div>
+            <div class="boxes btns-operation">
+              <button class="btn btn-calc" data-value="+">+</button>
+              <button class="btn btn-calc" data-value="-">-</button>
+              <button class="btn btn-calc" data-value="/">/</button>
+              <button class="btn btn-calc" data-value="%">%</button>
+              <button class="btn btn-calc" data-value="*">x</button>
+
+              <button class="btn btn-calc" data-value="=">=</button>
+            </div>
+          </div>
+        </div>
+        <div class="boxes-histoire">
+          <div class="btns-controll">
+            <button class="btn btn-control" data-button="clear">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                />
+              </svg>
+            </button>
+            <button class="btn btn-control" data-button="sort">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="operations">
+            <div class="opration-line">
+              <span class="operation">10+10/31*2+200-100</span>
+              <span class="result-opearation">=1200</span>
+            </div>
+            <div class="opration-line active">
+              <span class="operation">10+10/31*2+200-100</span>
+              <span class="result-opearation">=1200</span>
+            </div>
+            <div class="opration-line">
+              <span class="operation">10+10/31*2+200-100</span>
+              <span class="result-opearation">=1200</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
