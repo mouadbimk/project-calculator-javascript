@@ -7,9 +7,13 @@ export default class View {
    * @this {Object} ResultView Object
    * @author Mouad Bimekliouen
    */
-  render(data) {
-    if (!data) return;
-    const expr = data.join("");
+  render(data, strig = false) {
+    if (!data) {
+      this._parentEl.textContent = "";
+      return;
+    }
+
+    const expr = !strig ? data.join("") : data;
     this._parentEl.textContent = expr;
   }
 }
