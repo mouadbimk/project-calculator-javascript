@@ -5,6 +5,7 @@ export const state = {
     expr: "",
     value: [],
   },
+  history: [],
   ans: 0,
 };
 
@@ -55,3 +56,31 @@ export const addPiToExpr = function (piVal) {
   state.operations.expr += piVal;
   state.operations.value.push(piVal);
 };
+let id = 0;
+export const addToHistory = function (expr) {
+  const date = new Date();
+  id++;
+  const exprObj = {
+    id: id,
+    operation: expr.operation,
+    ans: expr.ans,
+    date: `${date.getDate()}-${
+      date.getMonth() + 1
+    }-${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+  };
+  state.history.push(exprObj);
+  saveInLocal();
+  return exprObj;
+};
+const saveInLocal = function () {
+  const history = localStorage.setItem(
+    "history",
+    JSON.stringify(state.history)
+  );
+  return history;
+};
+const init = function () {
+  const historyStorage = localStorage.getItem("history");
+  if (historyStorage) state.history = JSON.parse(historyStorage);
+};
+init();

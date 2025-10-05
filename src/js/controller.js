@@ -1,5 +1,6 @@
 import * as model from "./model.js";
 import btnsView from "./views/btnsView.js";
+import histoireView from "./views/histoireView.js";
 import resultView from "./views/resultView.js";
 const controllBtn = function (expr) {
   const data = model.addToResult(expr);
@@ -13,6 +14,11 @@ const calcEqual = function (expr) {
   resultView.renderTotal(model.state.ans);
   // change expr to total
   model.state.operations.value = [ans];
+  const operation = {
+    operation: model.state.operations.expr,
+    ans: ans,
+  };
+  controllHistory(operation);
 };
 const controllDelBtn = function (expr) {
   console.log(expr);
@@ -35,10 +41,24 @@ const controllPiVal = function (pi) {
   resultView.render(model.state.operations.value);
 };
 const controllRadic = function (symbol) {
-  console.log(symbol);
   model.state.operations.expr += symbol;
   model.state.operations.value.push(symbol);
   resultView.render(model.state.operations.value);
+};
+const controllHistory = function (expr) {
+  const exprObj = model.addToHistory(expr);
+  histoireView.render(exprObj);
+};
+const controllRenderHistory = function () {
+  const historyStorage = JSON.parse(localStorage.getItem("history"));
+  if (historyStorage && historyStorage.length > 0) {
+    histoireView.clear();
+    [...historyStorage].forEach((opr) => histoireView.render(opr));
+  }
+};
+const controllAddHistoryToOperation = function (expr) {
+  resultView.render(expr, true);
+  model.state.operations.value = [expr];
 };
 const init = function () {
   btnsView.addHandlerClick(controllBtn);
@@ -47,6 +67,8 @@ const init = function () {
   resultView.addHandlerReset(controllReset);
   resultView.addHandlerPi(controllPiVal);
   resultView.addHandlerRadic(controllRadic);
+  window.addEventListener("load", controllRenderHistory);
+  histoireView.addHandlerClick(controllAddHistoryToOperation);
 };
 
 init();
