@@ -6,7 +6,6 @@ export const state = {
     value: [],
   },
   history: [],
-  result: 0,
   ans: 0,
 };
 
@@ -24,6 +23,14 @@ export const calcTotal = function () {
   const exprArr = FILTER_EXPER(expr);
   if (!exprArr.length) return 0;
   const stack = [Number(exprArr[0])];
+  for (let i = 0; i < exprArr.length; i++) {
+    if (exprArr[i] === "√") {
+      const n = Number(exprArr[i + 1]);
+      const result = Math.sqrt(n);
+      exprArr[i] = result;
+      exprArr.splice(i + 1, 1);
+    }
+  }
   for (let i = 1; i < exprArr.length; i += 2) {
     const op = exprArr[i];
     const n = Number(exprArr[i + 1]);
@@ -44,3 +51,49 @@ export const calcTotal = function () {
   }
   return total;
 };
+export const addPiToExpr = function (piVal) {
+  state.operations.expr += piVal;
+  state.operations.value.push(piVal);
+};
+export const addToHistory = function (expr) {
+  const date = new Date();
+  let id = date.getTime();
+  const exprObj = {
+    id,
+    operation: expr.operation,
+    ans: expr.ans,
+    date: `${date.getDate()}-${
+      date.getMonth() + 1
+    }-${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+  };
+  state.history.push(exprObj);
+  saveInLocal();
+  return exprObj;
+};
+const saveInLocal = function () {
+  const history = localStorage.setItem(
+    "history",
+    JSON.stringify(state.history)
+  );
+  return history;
+};
+export const cleanHistory = function () {
+  localStorage.removeItem("history");
+};
+export const updateOperation = function (opearation) {
+  if (state.history.length > 0) {
+    if (!state.history.some((item) => item.id === opearation.id)) return;
+    const opr = state.history.filter((item) => item.id === opearation.id);
+    const newOpr = {
+      id: opearation.id,
+      opearation: opearation.expr,
+      date: opearation.date,
+    };
+    // todo remove operation from local and save new one
+  }
+};
+const init = function () {
+  const historyStorage = localStorage.getItem("history");
+  if (historyStorage) state.history = JSON.parse(historyStorage);
+};
+init();
