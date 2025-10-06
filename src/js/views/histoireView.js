@@ -19,10 +19,18 @@ class HistoireView extends View {
   addHandlerClick(handler) {
     this._parentEl.addEventListener("click", (e) => {
       const containerOper = e.target.closest(".opration-line");
+      [...this._parentEl.children].forEach((child) => {
+        child.classList.remove("active");
+      });
+      containerOper.classList.add("active");
       if (!containerOper) return;
       const expr = containerOper.querySelector(".operation").textContent;
-      console.log(expr);
-      handler(expr);
+      const { key } = containerOper.dataset;
+      const exprObj = {
+        expr,
+        id: key,
+      };
+      handler(exprObj);
     });
   }
 }

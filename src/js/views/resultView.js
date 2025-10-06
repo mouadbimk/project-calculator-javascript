@@ -1,7 +1,7 @@
 import View from "./View.js";
 class ResultView extends View {
   _parentEl = document.querySelector(".result");
-  _equalBtn = document.querySelector("button.btn-equla");
+  _equalBtn = document.querySelector("button.btn-equal");
   _delBtn = document.querySelector("button.btn-del");
   _resetBtn = document.querySelector("button.btn-reset");
   _piBtn = document.querySelector("button.btn-pi");

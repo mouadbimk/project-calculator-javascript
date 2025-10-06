@@ -14,9 +14,11 @@ const calcEqual = function (expr) {
   resultView.renderTotal(model.state.ans);
   // change expr to total
   model.state.operations.value = [ans];
+  const id = btnsView.checkId();
   const operation = {
     operation: model.state.operations.expr,
     ans: ans,
+    ...(id && { id }),
   };
   controllHistory(operation);
 };
@@ -46,7 +48,14 @@ const controllRadic = function (symbol) {
   resultView.render(model.state.operations.value);
 };
 const controllHistory = function (expr) {
-  const exprObj = model.addToHistory(expr);
+  //check if any operation have same id
+  if (expr.id) {
+    // if true render in same operation and updated
+    model.checkOperation(expr.id);
+  } else {
+    const exprObj = model.addToHistory(expr);
+  }
+  // if false create new one if history and localStorage
   histoireView.render(exprObj);
 };
 const controllRenderHistory = function () {
@@ -57,9 +66,15 @@ const controllRenderHistory = function () {
   }
 };
 const controllAddHistoryToOperation = function (expr) {
-  resultView.render(expr, true);
+  resultView.render(expr.expr, true);
+  btnsView.addIdToBtnEqual(expr.id);
   model.state.operations.value = [expr];
 };
+const controllCleanHistory = function () {
+  model.cleanHistory();
+  histoireView.clear();
+};
+
 const init = function () {
   btnsView.addHandlerClick(controllBtn);
   resultView.addEqualHandler(calcEqual);
@@ -69,6 +84,7 @@ const init = function () {
   resultView.addHandlerRadic(controllRadic);
   window.addEventListener("load", controllRenderHistory);
   histoireView.addHandlerClick(controllAddHistoryToOperation);
+  btnsView.addHandlerClearHistory(controllCleanHistory);
 };
 
 init();

@@ -19,7 +19,6 @@ export const addToResult = function (oper) {
  * @returns
  */
 export const calcTotal = function () {
-  console.log(state);
   const expr = state.operations.expr;
   const exprArr = FILTER_EXPER(expr);
   if (!exprArr.length) return 0;
@@ -56,12 +55,11 @@ export const addPiToExpr = function (piVal) {
   state.operations.expr += piVal;
   state.operations.value.push(piVal);
 };
-let id = 0;
 export const addToHistory = function (expr) {
   const date = new Date();
-  id++;
+  let id = date.getTime();
   const exprObj = {
-    id: id,
+    id,
     operation: expr.operation,
     ans: expr.ans,
     date: `${date.getDate()}-${
@@ -78,6 +76,21 @@ const saveInLocal = function () {
     JSON.stringify(state.history)
   );
   return history;
+};
+export const cleanHistory = function () {
+  localStorage.removeItem("history");
+};
+export const updateOperation = function (opearation) {
+  if (state.history.length > 0) {
+    if (!state.history.some((item) => item.id === opearation.id)) return;
+    const opr = state.history.filter((item) => item.id === opearation.id);
+    const newOpr = {
+      id: opearation.id,
+      opearation: opearation.expr,
+      date: opearation.date,
+    };
+    // todo remove operation from local and save new one
+  }
 };
 const init = function () {
   const historyStorage = localStorage.getItem("history");
