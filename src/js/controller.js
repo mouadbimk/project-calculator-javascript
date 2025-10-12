@@ -2,9 +2,9 @@ import * as model from "./model.js";
 import btnsView from "./views/btnsView.js";
 import histoireView from "./views/histoireView.js";
 import resultView from "./views/resultView.js";
-const controllBtn = function (expr) {
-  const data = model.addToResult(expr);
-  resultView.render(data.join(""), true);
+const controllBtn = function (operation) {
+  const data = model.addToResult(operation);
+  resultView.render(data);
 };
 const calcEqual = function (expr) {
   model.state.operations.expr = expr;
@@ -13,67 +13,74 @@ const calcEqual = function (expr) {
   // render total in UI
   resultView.renderTotal(ans);
   // change expr to total
-  const id = model.checkId();
-  const operation = {
-    operation: model.state.operations.expr,
-    ans: ans,
+  model.state.operations.value = [ans];
+  model.state.operations.expr = String(ans);
+  model.state.operations.value = [String(ans)];
+
+  const id = btnsView.checkId();
+  const op = {
+    operation: expr,
+    ans,
     ...(id && { id }),
   };
-  controllHistory(operation);
+  const wasUpdate = Boolean(id);
+  controllHistory(op);
+  if (!wasUpdate) histoireView.render(op);
 };
 const controllDelBtn = function (expr) {
-  console.log(expr);
-  console.log(model.state.operations);
   // update expr in state
   model.state.operations.expr = expr;
   // update array of operation
   model.state.operations.value = [expr];
   // render new opreation in UI
-  resultView.render(expr, true);
+  resultView.render({ expr, value: model.state.operations.value }, true);
 };
 const controllReset = function () {
   model.state.ans = 0;
   model.state.operations.expr = "";
   model.state.operations.value = [];
-  resultView.render("Enter Operation", true);
+  resultView.render({ expr: "Enter Operation", value: [] }, true);
 };
 const controllPiVal = function (pi) {
   model.addPiToExpr(pi);
-  resultView.render(model.state.operations.value);
+  resultView.render({
+    expr: model.state.operations.expr,
+    value: model.state.operations.value,
+  });
 };
 const controllRadic = function (symbol) {
   model.state.operations.expr += symbol;
   model.state.operations.value.push(symbol);
-  resultView.render(model.state.operations.value);
+  resultView.render({
+    expr: model.state.operations.expr,
+    value: model.state.operations.value,
+  });
 };
-const controllHistory = function (expr) {
-  let exprObj;
+const controllHistory = function (op) {
   //check if any operation have same id
-  if (expr.id) {
+  if (op.id) {
     // if true render in same operation and updated
-    exprObj = model.updateOperation(expr);
+    model.updateOperation(op);
   } else {
-    exprObj = model.addToHistory(expr);
+    const saved = model.addToHistory(op);
+    // if false create new one if history and localStorage
+    return saved;
   }
-  // if false create new one if history and localStorage
-  histoireView.render(exprObj);
 };
 const controllRenderHistory = function () {
   const historyStorage = JSON.parse(localStorage.getItem("history"));
-  if (historyStorage && historyStorage.length > 0) {
+  if (Array.isArray(histoireView) && histoireView.length) {
     histoireView.clear();
-    [...historyStorage].forEach((opr) => histoireView.render(opr));
+    historyStorage.forEach((opr) => histoireView.render(opr));
   }
 };
-const controllAddHistoryToOperation = function (expr) {
-  // render expr in result
-  resultView.render(expr.expr, true);
-  // add id to button equal
-  btnsView.addIdToBtnEqual(expr.id);
-  model.state.operations.id = expr.id;
-  model.state.operations.date = expr.date;
-  model.state.operations.expr = expr.expr;
-  model.state.operations.value = expr.expr.split("");
+const controllAddHistoryToOperation = function (item) {
+  console.log(item);
+  resultView.render(item.operation, true);
+  btnsView.addIdToBtnEqual(item.id);
+  model.state.operations.expr = item.operation;
+  model.state.operations.value = [item.operation];
+  model.state.ans = item.ans ?? 0;
 };
 const controllCleanHistory = function () {
   model.cleanHistory();
