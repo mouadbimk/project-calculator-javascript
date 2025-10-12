@@ -20,9 +20,5 @@ class BtnsView extends View {
   addHandlerClearHistory(handler) {
     this._cleanBtn.addEventListener("click", handler);
   }
-  checkId() {
-    const { id } = this._btnEqual.dataset;
-    return id ? id : false;
-  }
 }
 export default new BtnsView();

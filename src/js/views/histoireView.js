@@ -3,8 +3,10 @@ class HistoireView extends View {
   _parentEl = document.querySelector(".operations");
   render(data) {
     if (!data) return;
+    const existingEl = document.querySelector(`[data-key="${data.id}"]`);
     const html = this._generateMarkup(data);
-    this._parentEl.insertAdjacentHTML("afterbegin", html);
+    if (existingEl) existingEl.outerHTML = html;
+    else this._parentEl.insertAdjacentHTML("afterbegin", html);
   }
   clear() {
     this._parentEl.innerHTML = "";

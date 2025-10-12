@@ -10,7 +10,9 @@ export const state = {
 };
 
 export const addToResult = function (oper) {
-  state.operations.value.push(oper);
+  if (typeof oper === "object" && oper.expr)
+    state.operations.value.push(oper.expr);
+  else state.operations.value.push(oper);
   return state.operations.value;
 };
 /**
@@ -55,6 +57,9 @@ export const addPiToExpr = function (piVal) {
   state.operations.expr += piVal;
   state.operations.value.push(piVal);
 };
+export const checkId = function () {
+  return state.operations.id ?? false;
+};
 export const addToHistory = function (expr) {
   const date = new Date();
   let id = date.getTime();
@@ -80,18 +85,31 @@ const saveInLocal = function () {
 export const cleanHistory = function () {
   localStorage.removeItem("history");
 };
-export const updateOperation = function (opearation) {
-  if (state.history.length > 0) {
-    if (!state.history.some((item) => item.id === opearation.id)) return;
-    const opr = state.history.filter((item) => item.id === opearation.id);
-    const newOpr = {
-      id: opearation.id,
-      opearation: opearation.expr,
-      date: opearation.date,
-    };
-    // todo remove operation from local and save new one
+export const updateOperation = function (operation) {
+  console.log(operation);
+  if (state.history.length === 0) return;
+  const oprIndex = state.history.findIndex(
+    (item) => Number(item.id) === Number(operation.id)
+  );
+  console.log(state.history);
+  console.log(operation.id);
+  const newOpr = {
+    id: operation.id,
+    operation: operation.operation,
+    ans: operation.ans,
+  };
+  // todo remove operation from local and save new one
+  if (oprIndex !== -1) {
+    newOpr.date = state.history[oprIndex].date;
+    state.history[oprIndex] = newOpr;
+  } else {
+    state.history.push(newOpr);
   }
+  // update history in local
+  saveInLocal();
+  return newOpr;
 };
+
 const init = function () {
   const historyStorage = localStorage.getItem("history");
   if (historyStorage) state.history = JSON.parse(historyStorage);
