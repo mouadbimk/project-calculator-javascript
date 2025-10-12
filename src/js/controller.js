@@ -22,8 +22,6 @@ const calcEqual = function (expr) {
   controllHistory(operation);
 };
 const controllDelBtn = function (expr) {
-  console.log(expr);
-  console.log(model.state.operations);
   // update expr in state
   model.state.operations.expr = expr;
   // update array of operation
